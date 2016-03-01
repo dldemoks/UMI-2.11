@@ -150,7 +150,7 @@ class payeerPayment extends payment
 				
 				$buffer->push($_POST['m_orderid'] . '|error');
 				$buffer->end();
-				return;
+				return false;
 			}
 				
 			if ($_POST['m_status'] == "success" && $valid_ip)
