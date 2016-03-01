@@ -134,26 +134,39 @@ class payeerPayment extends payment
 				file_put_contents($_SERVER['DOCUMENT_ROOT'] . $this->object->payeer_log, $log_text, FILE_APPEND);
 			}
 			
-			if ($_POST["m_sign"] == $sign_hash && $_POST['m_status'] == "success" && $valid_ip)
+			if ($_POST["m_sign"] != $sign_hash)
+			{
+				$to = $this->object->payeer_emailerr;
+				
+				if (!empty($to))
+				{
+					$subject = "Ошибка оплаты";
+					$message = "Не удалось провести платёж через систему Payeer по следующим причинам:\n\n";
+					$message .= " - Не совпадают цифровые подписи\n";
+					$message .= "\n" . $log_text;
+					$headers = "From: no-reply@" . $_SERVER['HTTP_SERVER'] . "\r\nContent-type: text/plain; charset=utf-8 \r\n";
+					mail($to, $subject, $message, $headers);
+				}
+				
+				$buffer->push($_POST['m_orderid'] . '|error');
+				$buffer->end();
+				return;
+			}
+			
+			if ($_POST['m_status'] == "success" && $valid_ip)
 			{
 				$this->order->setPaymentStatus('accepted');
-				
 				$this->order->payment_document_num = $_POST['m_orderid'];
-				
 				$response = $_POST['m_orderid'] . "|success";
 			}
 			else
 			{
-				if (!empty($this->object->payeer_emailerr))
+				$to = $this->object->payeer_emailerr;
+				
+				if (!empty($to))
 				{
-					$to = $this->object->payeer_emailerr;
 					$subject = "Ошибка оплаты";
 					$message = "Не удалось провести платёж через систему Payeer по следующим причинам:\n\n";
-					
-					if ($_POST["m_sign"] != $sign_hash)
-					{
-						$message .= " - Не совпадают цифровые подписи\n";
-					}
 					
 					if ($_POST['m_status'] != "success")
 					{
