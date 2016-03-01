@@ -84,6 +84,25 @@ class payeerPayment extends payment
 					
 			$sign_hash = strtoupper(hash('sha256', implode(":", $arHash)));
 			
+			if ($_POST["m_sign"] != $sign_hash)
+			{
+				$to = $this->object->payeer_emailerr;
+				
+				if (!empty($to))
+				{
+					$subject = "Error payment";
+					$message = "Failed to make the payment through Payeer for the following reasons:\n\n";
+					$message .= " - Do not match the digital signature\n";
+					$message .= "\n" . $log_text;
+					$headers = "From: no-reply@" . $_SERVER['HTTP_SERVER'] . "\r\nContent-type: text/plain; charset=utf-8 \r\n";
+					mail($to, $subject, $message, $headers);
+				}
+				
+				$buffer->push($_POST['m_orderid'] . '|error');
+				$buffer->end();
+				return false;
+			}
+			
 			// check the list of trusted ip
 			
 			$list_ip_str = str_replace(' ', '', $this->object->payeer_ipfilter);
@@ -133,26 +152,7 @@ class payeerPayment extends payment
 			{
 				file_put_contents($_SERVER['DOCUMENT_ROOT'] . $this->object->payeer_log, $log_text, FILE_APPEND);
 			}
-			
-			if ($_POST["m_sign"] != $sign_hash)
-			{
-				$to = $this->object->payeer_emailerr;
-				
-				if (!empty($to))
-				{
-					$subject = "Error payment";
-					$message = "Failed to make the payment through Payeer for the following reasons:\n\n";
-					$message .= " - Do not match the digital signature\n";
-					$message .= "\n" . $log_text;
-					$headers = "From: no-reply@" . $_SERVER['HTTP_SERVER'] . "\r\nContent-type: text/plain; charset=utf-8 \r\n";
-					mail($to, $subject, $message, $headers);
-				}
-				
-				$buffer->push($_POST['m_orderid'] . '|error');
-				$buffer->end();
-				return false;
-			}
-				
+
 			if ($_POST['m_status'] == "success" && $valid_ip)
 			{
 				$this->order->setPaymentStatus('accepted');
