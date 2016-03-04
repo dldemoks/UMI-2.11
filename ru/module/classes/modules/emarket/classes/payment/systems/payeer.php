@@ -127,8 +127,8 @@ class payeerPayment extends payment
 			
 			if (!$valid_ip)
 			{
-				$message .= " - ip-адрес сервера не является доверенным\n";
-				"   доверенные ip: " . $sIP . "\n";
+				$message .= " - ip-адрес сервера не является доверенным\n" .
+				"   доверенные ip: " . $sIP . "\n" .
 				"   ip текущего сервера: " . $_SERVER['REMOTE_ADDR'] . "\n";
 				$err = true;
 			}

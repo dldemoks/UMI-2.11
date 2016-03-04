@@ -127,8 +127,8 @@ class payeerPayment extends payment
 			
 			if (!$valid_ip)
 			{
-				$message .= " - ip address of the server is not trusted\n";
-				"   trusted ip: " . $sIP . "\n";
+				$message .= " - ip address of the server is not trusted\n" .
+				"   trusted ip: " . $sIP . "\n" .
 				"   ip of the current server: " . $_SERVER['REMOTE_ADDR'] . "\n";
 				$err = true;
 			}
