@@ -41,15 +41,15 @@ mysql_query("INSERT INTO `cms3_object_fields` VALUES(NULL, 'payeer_url', 'URL м
 mysql_query("SET @field = LAST_INSERT_ID()");
 mysql_query("INSERT INTO `cms3_fields_controller` VALUES (15, @field, @field_group)");
 
-mysql_query("INSERT INTO `cms3_object_fields` VALUES(NULL, 'payeer_shop', 'Идентификатор магазина', 0, 15, 0, 1, NULL, 0, 0, 'Идентификатор магазина, зарегистрированного в системе PAYEER. Узнать его можно в аккаунте Payeer: Аккаунт -> Мой магазин -> Изменить.', 1, NULL, 0, 0, 0)");
+mysql_query("INSERT INTO `cms3_object_fields` VALUES(NULL, 'payeer_shop', 'Идентификатор магазина', 0, 15, 0, 1, NULL, 0, 0, 'Идентификатор магазина, зарегистрированного в Payeer', 1, NULL, 0, 0, 0)");
 mysql_query("SET @field = LAST_INSERT_ID()");
 mysql_query("INSERT INTO `cms3_fields_controller` VALUES (20, @field, @field_group)");
 
-mysql_query("INSERT INTO `cms3_object_fields` VALUES(NULL, 'payeer_key', 'Секретный ключ', 0, 15, 0, 1, NULL, 0, 0, 'Секретный ключ оповещения о выполнении платежа, который используется для проверки целостности полученной информации и однозначной идентификации отправителя. Должен совпадать с секретным ключем, указанным в аккаунте Payeer: Аккаунт -> Мой магазин -> Изменить.', 1, NULL, 0, 0, 0)");
+mysql_query("INSERT INTO `cms3_object_fields` VALUES(NULL, 'payeer_key', 'Секретный ключ', 0, 15, 0, 1, NULL, 0, 0, 'Секретный ключ магазина', 1, NULL, 0, 0, 0)");
 mysql_query("SET @field = LAST_INSERT_ID()");
 mysql_query("INSERT INTO `cms3_fields_controller` VALUES (25, @field, @field_group)");
 
-mysql_query("INSERT INTO `cms3_object_fields` VALUES(NULL, 'payeer_log', 'Путь до файла для журнала оплат через Payeer (например, /payeer_orders.log)', 0, 15, 0, 1, NULL, 0, 0, 'Если путь не указан, то журнал не записывается', 0, NULL, 0, 0, 0)");
+mysql_query("INSERT INTO `cms3_object_fields` VALUES(NULL, 'payeer_log', 'Путь до журнала платежных операций (например, /payeer_orders.log)', 0, 15, 0, 1, NULL, 0, 0, 'Если путь не указан, то журнал не записывается', 0, NULL, 0, 0, 0)");
 mysql_query("SET @field = LAST_INSERT_ID()");
 mysql_query("INSERT INTO `cms3_fields_controller` VALUES (30, @field, @field_group)");
 

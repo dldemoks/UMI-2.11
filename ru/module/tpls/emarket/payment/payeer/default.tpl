@@ -8,7 +8,7 @@ $FORMS['form_block'] = <<<END
 	<input type="hidden" name="m_orderid" value="%payeer_orderid%" />
 	<input type="hidden" name="m_amount" value="%payeer_amount%" />
 	<input type="hidden" name="m_curr" value="%payeer_curr%" />
-	<input type="hidden" name="m_desc" value="Оплата заказа №%payeer_orderid%" />
+	<input type="hidden" name="m_desc" value="%payeer_desc%" />
 	<input type="hidden" name="m_sign" value="%payeer_sign%" />
 </form>
 END;

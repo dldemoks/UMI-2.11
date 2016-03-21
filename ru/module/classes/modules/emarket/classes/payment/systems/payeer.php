@@ -22,8 +22,8 @@ class payeerPayment extends payment
 		$param['payeer_amount'] = number_format($this->order->getActualPrice(), 2, '.', '');
 		$param['payeer_desc']	= base64_encode('Оплата заказа №' . $param['payeer_orderid']);
 		
-		$m_curr = strtoupper( mainConfiguration::getInstance()->get('system', 'default-currency') );
-		
+		$m_curr = strtoupper(mainConfiguration::getInstance()->get('system', 'default-currency'));
+
 		$param['payeer_curr'] = ($m_curr == 'RUR' ? 'RUB' : $m_curr);
 		
 		$m_key = $this->object->payeer_key;
